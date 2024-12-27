@@ -13,7 +13,20 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = pygame.time.Clock()
 
 letters = []
+result = ['B', 'B', 'B', 'B', 'B']
 max_length = 5
+
+def check_for_matches(_letters):
+    target_word = ['B', 'E', 'A', 'N', 'S']
+    result = []
+    for index, letter in enumerate(_letters):
+        if letter == target_word[index]:
+            result.append('G')
+        elif letter in target_word:
+            result.append('Y')
+        else:
+            result.append('B')
+    return result
 
 while True:
     for event in pygame.event.get():
@@ -24,9 +37,10 @@ while True:
         if event.type == pygame.KEYDOWN:
             if len(letters) > 0 and event.key == pygame.K_BACKSPACE:
                 letters.pop(len(letters)-1)
+            elif len(letters) == max_length and event.key == pygame.K_RETURN:
+                result = check_for_matches(letters)
             elif event.unicode.isalpha() and len(letters) < max_length:
                 letters.append(event.unicode.upper())
-            print(letters)
         
     screen.fill("pink")
 
@@ -36,9 +50,16 @@ while True:
 
     for x in range(5):
         for y in range(5):
+            if(result[x] == 'G') and y == 0:
+                color = 'green'
+            elif(result[x] == 'Y') and y == 0:
+                color = 'yellow'
+            else:
+                color = 'lightgrey'
+
             pygame.draw.rect(
                 screen,
-                "lightgrey",
+                color,
                 pygame.Rect(
                     spacing + x * (rect_width + spacing),
                     spacing + y * (rect_height + spacing),
