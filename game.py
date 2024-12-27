@@ -2,7 +2,10 @@ import pygame
 
 pygame.init()
 
-screen = pygame.display.set_mode((1280,720))
+SCREEN_WIDTH = 720
+SCREEN_HEIGHT = 720
+
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
 clock = pygame.time.Clock()
 
@@ -13,6 +16,25 @@ while True:
             raise SystemExit
 
     screen.fill("purple")
+
+    rect_width = SCREEN_WIDTH / 6
+    rect_height = SCREEN_WIDTH / 6
+    spacing = (SCREEN_WIDTH - rect_width * 5) // 6
+
+    for x in range(5):
+        for y in range(5):
+            pygame.draw.rect(
+                screen,
+                "grey",
+                pygame.Rect(
+                    spacing + x * (rect_width + spacing),
+                    spacing + y * (rect_height + spacing),
+                    rect_width,
+                    rect_height
+                ),
+                0,
+                5
+            )
 
     pygame.display.flip()
     clock.tick(60)
