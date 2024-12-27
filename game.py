@@ -9,6 +9,9 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
 clock = pygame.time.Clock()
 
+letters = []
+max_length = 5
+
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -16,8 +19,12 @@ while True:
             raise SystemExit
         
         if event.type == pygame.KEYDOWN:
-            print(event.unicode.upper())
-
+            if len(letters) > 0 and event.key == pygame.K_BACKSPACE:
+                letters.pop(len(letters)-1)
+            elif event.unicode.isalpha() and len(letters) < max_length:
+                letters.append(event.unicode.upper())
+            print(letters)
+        
     screen.fill("pink")
 
     rect_width = SCREEN_WIDTH / 6
