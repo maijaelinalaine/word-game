@@ -14,6 +14,9 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             raise SystemExit
+        
+        if event.type == pygame.KEYDOWN:
+            print(event.unicode.upper())
 
     screen.fill("pink")
 
