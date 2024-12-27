@@ -15,7 +15,7 @@ while True:
             pygame.quit()
             raise SystemExit
 
-    screen.fill("purple")
+    screen.fill("pink")
 
     rect_width = SCREEN_WIDTH / 6
     rect_height = SCREEN_WIDTH / 6
@@ -25,7 +25,7 @@ while True:
         for y in range(5):
             pygame.draw.rect(
                 screen,
-                "grey",
+                "lightgrey",
                 pygame.Rect(
                     spacing + x * (rect_width + spacing),
                     spacing + y * (rect_height + spacing),
