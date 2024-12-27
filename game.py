@@ -13,8 +13,13 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 clock = pygame.time.Clock()
 
 letters = []
-result = ['B', 'B', 'B', 'B', 'B']
 max_length = 5
+
+attempt = 0
+attempts = []
+
+result = ['B', 'B', 'B', 'B', 'B']
+results = []
 
 def check_for_matches(_letters):
     target_word = ['B', 'E', 'A', 'N', 'S']
@@ -39,6 +44,10 @@ while True:
                 letters.pop(len(letters)-1)
             elif len(letters) == max_length and event.key == pygame.K_RETURN:
                 result = check_for_matches(letters)
+                attempts.append(letters[:])
+                results.append(result)
+                letters = []
+                attempt += 1
             elif event.unicode.isalpha() and len(letters) < max_length:
                 letters.append(event.unicode.upper())
         
@@ -50,12 +59,13 @@ while True:
 
     for x in range(5):
         for y in range(5):
-            if(result[x] == 'G') and y == 0:
-                color = 'green'
-            elif(result[x] == 'Y') and y == 0:
-                color = 'yellow'
-            else:
-                color = 'lightgrey'
+            color = 'lightgrey'
+            
+            if y < len(results):
+                if results[y][x] == 'G':
+                    color = 'green'
+                elif results[y][x] == 'Y':
+                    color = 'yellow'
 
             pygame.draw.rect(
                 screen,
@@ -73,8 +83,21 @@ while True:
     for index, letter in enumerate(letters):
         text1 = font1.render(letter, True, "black")
         textRect1 = text1.get_rect()
-        textRect1.center = (spacing * 4 + index * (rect_width + spacing), (rect_height/2) + spacing )
+        textRect1.center = (
+            spacing + (rect_width / 2) + index * (rect_width + spacing),
+            spacing + (rect_height / 2) + attempt * (rect_height + spacing)
+        )
         screen.blit(text1, textRect1)
+
+    for y, attempt_letters in enumerate(attempts):
+        for x, letter in enumerate(attempt_letters):
+            text1 = font1.render(letter, True, "black")
+            textRect1 = text1.get_rect()
+            textRect1.center = (
+                spacing + (rect_width / 2) + x * (rect_width + spacing),
+                spacing + (rect_height / 2) + y * (rect_height + spacing)
+            )
+            screen.blit(text1, textRect1)
 
     pygame.display.flip()
     clock.tick(60)
