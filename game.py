@@ -1,6 +1,9 @@
 import pygame
 
 pygame.init()
+pygame.font.init()
+
+font1 = pygame.font.SysFont('freesanbold.ttf', 50)
 
 SCREEN_WIDTH = 720
 SCREEN_HEIGHT = 720
@@ -45,6 +48,12 @@ while True:
                 0,
                 5
             )
+
+    for index, letter in enumerate(letters):
+        text1 = font1.render(letter, True, "black")
+        textRect1 = text1.get_rect()
+        textRect1.center = (spacing * 4 + index * (rect_width + spacing), (rect_height/2) + spacing )
+        screen.blit(text1, textRect1)
 
     pygame.display.flip()
     clock.tick(60)
