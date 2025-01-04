@@ -63,9 +63,9 @@ while True:
             
             if y < len(results):
                 if results[y][x] == 'G':
-                    color = 'green'
+                    color = 'lightgreen'
                 elif results[y][x] == 'Y':
-                    color = 'yellow'
+                    color = 'lightyellow'
 
             pygame.draw.rect(
                 screen,
